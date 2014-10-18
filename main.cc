@@ -33,6 +33,24 @@ void matrixMultMod(int* M1,int* M2,int modP)
 	//cout<<"result is:"<<M1[0]<<" "<<M1[1]<<" "<<M1[2]<<" "<<M1[3]<<'\n';
 }
 
+void initializeMatrices(int** myMatrices,int a0,int b0,int p0,int input_size,int process_count)
+{
+	myMatrices[0]=new int[4];
+	myMatrices[0][0]=a0;
+	myMatrices[0][1]=0;
+	myMatrices[0][2]=b0;
+	myMatrices[0][3]=1;
+	for(int i=1;i<input_size/process_count;i++)
+	{
+		myMatrices[i]=new int[4];
+		myMatrices[i][0]=myMatrices[i-1][0];
+		myMatrices[i][1]=myMatrices[i-1][1];
+		myMatrices[i][2]=myMatrices[i-1][2];
+		myMatrices[i][3]=myMatrices[i-1][3];
+		matrixMultMod(&myMatrices[i][0],myMatrices[0],p0);
+	}
+}
+
 int* parallelPrefix(int* out, int rank, int process_count,int p0)
 {
 	int local[4]={1, 0, 0, 1};
@@ -94,12 +112,16 @@ int main(int argc, char **argv) {
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
   MPI_Comm_size(MPI_COMM_WORLD, &process_count);
   
+  int **myMatrices;
+  myMatrices=new int* [input_size/process_count];
+  initializeMatrices(myMatrices,a0,b0,p0,input_size,process_count);
+  
   //matrix initializaion and parallel prefix call
-  int M[4]={a0, 0, b0, 1};
+  //int M[4]={a0, 0, b0, 1};
   //int M[4]={1, 2, -2, -1};
-  int* ans=new int[4];
-  ans=parallelPrefix(M,rank,process_count,p0);
-  cout<<"\n"<<rank<<" says:"<<ans[0]<<" "<<ans[1]<<" "<<ans[2]<<" "<<ans[3]<<'\n';
+  //int* ans=new int[4];
+  //ans=parallelPrefix(M,rank,process_count,p0);
+  //cout<<"\n"<<rank<<" says:"<<ans[0]<<" "<<ans[1]<<" "<<ans[2]<<" "<<ans[3]<<'\n';
 
   struct timeval time_begin;
   if(rank == 0)
