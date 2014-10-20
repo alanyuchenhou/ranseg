@@ -121,6 +121,9 @@ int main(int argc, char **argv) {
   MPI_Init(&argc, &argv);
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
   MPI_Comm_size(MPI_COMM_WORLD, &process_count);
+  struct timeval time_begin;
+  if(rank == 0)
+    gettimeofday(&time_begin, NULL);
   int *initial; 	//the first matrix of each rank; this is the M(a, 0; b, 1)
   int *final;	//the last matrix of each rank; this is M^(n/p)
   initial=new int[4];
@@ -135,22 +138,19 @@ int main(int argc, char **argv) {
   //generate the random numbers using MOffset, local matrix of corresponding order and seed!
   populate(&ranseq[0],MOffset,initial,a0,b0,p0,x0,input_size,process_count);
 
-  cout<<"rank="<<rank;
-  for(int i=0;i<input_size/process_count;i++)
-    {
-	  cout<<" "<<ranseq[i];
-    }
-  cout<<"\n";
+  // cout<<"rank="<<rank;
+  // for(int i=0;i<input_size/process_count;i++)
+  //   {
+  // 	  cout<<" "<<ranseq[i];
+  //   }
+  // cout<<"\n";
 
-  struct timeval time_begin;
-  if(rank == 0)
-    gettimeofday(&time_begin, NULL);
   struct timeval time_end;
   long runtime = 0;
   if(rank == 0) {
     gettimeofday(&time_end, NULL);
     runtime += getTime(time_begin, time_end);
-   // printf("%d %d %ld \n", process_count, input_size, runtime);
+   printf("%16d %16d %16ld \n", process_count, input_size, runtime);
   }
   MPI_Finalize();
   return 0;
