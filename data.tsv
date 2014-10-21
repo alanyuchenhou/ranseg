@@ -69,7 +69,7 @@ processor_count        input_size          runtime
               
 
                             input size	Time_1	Time_2
-              16            100	84035         86517
+              16            100                         84035         86517
               16            1000	89758	84506
               16            10000	86382	45587
               16            100000	48678	81518
