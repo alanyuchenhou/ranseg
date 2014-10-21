@@ -122,8 +122,8 @@ int main(int argc, char **argv) {
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
   MPI_Comm_size(MPI_COMM_WORLD, &process_count);
   struct timeval time_begin;
-  if(rank == 0)
-    gettimeofday(&time_begin, NULL);
+  //if(rank == 0)
+  gettimeofday(&time_begin, NULL);
   int *initial; 	//the first matrix of each rank; this is the M(a, 0; b, 1)
   int *final;	//the last matrix of each rank; this is M^(n/p)
   initial=new int[4];
@@ -146,12 +146,33 @@ int main(int argc, char **argv) {
   // cout<<"\n";
 
   struct timeval time_end;
-  long runtime = 0;
-  if(rank == 0) {
-    gettimeofday(&time_end, NULL);
-    runtime += getTime(time_begin, time_end);
-   printf("%16d %16d %16ld \n", process_count, input_size, runtime);
-  }
+  int runtime = 0;
+
+
+//if(rank == 0) {
+  gettimeofday(&time_end, NULL);
+  runtime += getTime(time_begin, time_end);
+  if(rank!=0)
+    {
+      MPI_Send(&runtime,1,MPI_INT,0,0,MPI_COMM_WORLD);
+    }
+  else
+    {
+      int timercv;
+      MPI_Status status;
+      for(int i=1;i<process_count;i++)
+	{
+	  MPI_Recv(&timercv,1,MPI_INT,MPI_ANY_SOURCE,0,MPI_COMM_WORLD,&status);
+	  //cout<<"received\n";	  
+  	  if (timercv>runtime)
+	    {
+	      //cout<<"runtime was:"<<runtime<<'\n';
+	      runtime=timercv;
+	    }
+	}
+      printf("%16d %16d %16ld \n", process_count, input_size, runtime);
+    }
+
   MPI_Finalize();
   return 0;
 }
