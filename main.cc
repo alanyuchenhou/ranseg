@@ -170,7 +170,7 @@ int main(int argc, char **argv) {
 	      runtime=timercv;
 	    }
 	}
-      printf("%16d %16d %16ld \n", process_count, input_size, runtime);
+      printf("%16d %16d %16d \n", process_count, input_size, runtime);
     }
 
   MPI_Finalize();

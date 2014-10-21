@@ -1,21 +1,22 @@
 #!/usr/bin/env bash
 set -e
 make
-record=data.b.tsv
-> $record
 a0=7
 b0=19
 p0=9973
 x0=111
 
-# question a
-# input_size_array=(100000000)
-# process_count_array=(2 4 8 16)
-# question b
-input_size_array=(100 1000 10000 100000 1000000 10000000 100000000)
-process_count_array=(16)
+record=data.tsv
+# > $record
+# printf "processor_count        input_size          runtime \n" >> $record
 
-printf "processor_count        input_size          runtime \n" >> $record
+# question a
+input_size_array=(1000000000)
+process_count_array=(2 4 8 16)
+# question b
+# input_size_array=(100 1000 10000 100000 1000000 10000000 100000000 1000000000)
+# process_count_array=(16)
+
 for process_count in ${process_count_array[@]}
 do
     for input_size in ${input_size_array[@]}
