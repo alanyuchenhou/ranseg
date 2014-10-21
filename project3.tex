@@ -1,0 +1,53 @@
+\documentclass[12pt]{article}
+\renewcommand*{\familydefault}{\sfdefault}
+\usepackage{listings}
+\usepackage{amsmath}
+\usepackage{fullpage}
+\usepackage{tabularx}
+\usepackage{graphicx}
+\begin{document}
+\title{Cpt S 483 Assignment Cover Sheet \\ Fall 2014
+}
+\author{Armen Abnousi, Yuchen Hou}
+\maketitle
+
+(To be turned in along with each homework and program project submission)
+
+Assignment: project 3
+
+For individual assignments:
+
+Student name (Last, First):
+
+For team projects:
+
+List of all students (Last, First):
+
+List of collaborative personnel (excluding team participants):
+
+I certify that I have listed above all the sources that I consulted regarding this assignment, and that I have not received or given any assistance that is contrary to the letter or the spirit of the collaboration guidelines for this assignment. (print name here if using a word processor).
+
+Assignment Project Participant(s): Hou, Yuchen; Abnousi, Armen
+
+Today's Date: \today
+
+\pagebreak
+
+\section{Process count analysis}
+\begin{figure}[htb]
+  \centering
+      {\includegraphics[width=1\linewidth]{process.png}} \rule{1\linewidth}{1pt}
+      \caption{The runtime for fixed input size (100M) and various process count with logscaling for both x and y axes.}
+      \label{fig:process}
+\end{figure}
+The runtime for fixed input size and various process count is shown in Figure \ref{fig:process}, and the speedup achieved is almost linear with respect to process count.
+\section{Input size analysis}
+\begin{figure}[htb]
+  \centering
+      {\includegraphics[width=1\linewidth]{input.png}} \rule{1\linewidth}{1pt}
+      \caption{The runtime for various input size and fixed process count (16) with logscaling for both x and y axes.}
+      \label{fig:input}
+\end{figure}
+The runtime for various input size and fixed process count is shown in Figure \ref{fig:input}. As small input size may not provide substantially large workload for the application, we ran the identical experiments multiple times to determine the suitable range of input size. The data we collected tells us small input sizes do not provide consistent speed up and only input size greater 1 million should be used in the analysis.
+
+\end{document}

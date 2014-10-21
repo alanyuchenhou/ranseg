@@ -6,8 +6,7 @@ b0=19
 p0=9973
 x0=111
 
-record=data.tsv
-# > $record
+record=data.a.tsv
 # printf "processor_count        input_size          runtime \n" >> $record
 
 # question a
