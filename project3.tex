@@ -48,6 +48,8 @@ The runtime for fixed input size and various process count is shown in Figure \r
       \caption{The runtime for various input size and fixed process count (16) with logscaling for both x and y axes.}
       \label{fig:input}
 \end{figure}
-The runtime for various input size and fixed process count is shown in Figure \ref{fig:input}. As small input size may not provide substantially large workload for the application, we ran the identical experiments multiple times to determine the suitable range of input size. The data we collected tells us small input sizes do not provide consistent speed up and only input size greater 1 million should be used in the analysis.
+The runtime for various input size and fixed process count is shown in Figure \ref{fig:input}. We ran the identical experiments multiple times to determine the suitable range of input size. 
+The data we collected tells us than in smaller input sizes the runtime doesn't change so much, we can be an indicator of dominant communication time over computation time.
+For input sizes greater than $10^9$, the slope of increase in runtime is much sharper than previous experiments which can mean that it's over-utilizing the system. (This input size is too big for this number of processes).
 
 \end{document}
